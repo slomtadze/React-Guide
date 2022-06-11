@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import uniqid from 'uniqid';
 import ExpenseForm from './ExpenseForm';
 import './NewExpense.css'
 
 const NewExpense = (props) => {
+
+    const [isEditing, setIsEditing] = useState(false);
 
     const saveExpenseDataHandler = (enteredExpenseData) => {
         const expenseData = {
@@ -12,9 +15,12 @@ const NewExpense = (props) => {
         props.onAddExpense(expenseData)
     }
 
+    const onSetIsEditing = () => setIsEditing(true);
+
     return(
         <div className='new-expense'>
-            <ExpenseForm onSaveExpenseData = {saveExpenseDataHandler}/>
+            {!isEditing && <button onClick={onSetIsEditing}>Add New Expense</button>}
+            {isEditing && <ExpenseForm onSaveExpenseData = {saveExpenseDataHandler} isEditing = {setIsEditing}/>}
         </div>
     )
 }
